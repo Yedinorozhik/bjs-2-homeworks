@@ -22,3 +22,34 @@ function solveEquation(a, b, c) {
 
   return result;
 }
+
+function calculateTotalMortgage(percent, contribution, amount, countMonths) {
+  percent = Number(percent);
+  contribution = Number(contribution);
+  amount = Number(amount);
+  countMonths = Number(countMonths);
+
+  if (
+    isNaN(percent) ||
+    isNaN(contribution) ||
+    isNaN(amount) ||
+    isNaN(countMonths)
+  ) {
+    return false;
+  }
+
+  let monthlyPercent = percent / 100 / 12;
+  let loanBody = amount - contribution;
+
+  if (loanBody <= 0) {
+    return 0;
+  }
+
+  let power = (1 + monthlyPercent) ** countMonths;
+  let monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (power - 1)));
+
+  let totalPayment = monthlyPayment * countMonths;
+  totalPayment = Number(totalPayment.toFixed(2));
+
+  return totalPayment;
+}
